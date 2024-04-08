@@ -8,8 +8,8 @@ return [
 
     'navigation_section_group' => 'filament-spatie-roles-permissions::filament-spatie.section.roles_and_permissions', // Default uses language constant
 
-    'team_model' => \App\Models\Team::class,
-    
+//    'team_model' => \App\Models\Team::class,
+
     'scope_to_tenant' => true,
 
     /*
@@ -21,6 +21,7 @@ return [
     ],
 
     'guard_names' => [
+        'student' => 'student',
         'web' => 'web',
         'api' => 'api',
     ],
@@ -62,6 +63,7 @@ return [
         'guard_names' => [
             'web',
             'api',
+            'student',
         ],
 
         'permission_affixes' => [
@@ -132,7 +134,9 @@ return [
          * Define any other permission that should be synced with the DB
          */
         'custom_permissions' => [
-            //'view-log'
+            'Teacher' => \App\Models\Teachers::class,
+            'Dean' => \App\Models\Deans::class
+//            'Teachers' => Spatie\Permission\Models\Role::class,
         ],
 
         'user_model' => \App\Models\User::class,

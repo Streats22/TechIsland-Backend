@@ -16,16 +16,17 @@ class Students extends Authenticatable
 
     public const TABLE = 'students';
 
-    protected $table = self::TABLE;
-
     protected $guard = 'student';
 
     protected $fillable = [
-        'first_name',
-        'last_name',
+        'name',
+        'school',
+        'student_number',
+        'codename',
+        'teacher_id',
         'email',
+        'email_verified_at',
         'password',
-
     ];
 
     protected $hidden = [
@@ -36,4 +37,8 @@ class Students extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    public function teacher()
+    {
+        $this->belongsTo(Teachers::class, 'teacher_id');
+    }
 }

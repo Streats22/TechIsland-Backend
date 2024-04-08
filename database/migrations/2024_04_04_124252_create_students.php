@@ -17,7 +17,8 @@ return new class extends Migration
             $table->string('school');
             $table->string('student_number');
             $table->string('codename')->nullable();
-            $table->foreignId('teacher_id');
+            $table->unsignedBigInteger('teacher_id')->nullable();
+            $table->foreign('teacher_id')->references('id')->on('teachers')->onDelete('cascade');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

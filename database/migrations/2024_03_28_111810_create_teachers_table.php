@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('teachers', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('first_name');
+            $table->string('last_name')->nullable();
             $table->string('school');
-            $table->string('student_number')->nullable();
-            $table->string('codename')->nullable();
             $table->string('email')->unique();
-            $table->foreignId('dean_id');
+            $table->unsignedBigInteger('dean_id')->nullable();
+            $table->foreign('dean_id')->references('id')->on('deans')->onDelete('cascade');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

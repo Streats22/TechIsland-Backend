@@ -2,10 +2,12 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\AdministratorsResource\Pages;
-use App\Filament\Resources\AdministratorsResource\RelationManagers;
-use App\Models\Administrators;
+use App\Filament\Resources\UsersResource\Pages;
+use App\Filament\Resources\UsersResource\RelationManagers;
+use App\Models\User;
+use App\Models\Users;
 use Filament\Forms;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -13,17 +15,17 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class AdministratorsResource extends Resource
+class UsersResource extends Resource
 {
-    protected static ?string $model = Administrators::class;
-
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $model = User::class;
+    protected static ?string $navigationLabel = 'Administrator';
+    protected static ?string $navigationIcon = 'heroicon-o-computer-desktop';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                //
+                Select::make('roles')->multiple()->relationship('roles', 'name')
             ]);
     }
 
@@ -31,7 +33,8 @@ class AdministratorsResource extends Resource
     {
         return $table
             ->columns([
-                //
+              Tables\Columns\TextColumn::make('name'),
+//                Tables\Columns\TextColumn::make('role'),
             ])
             ->filters([
                 //
@@ -56,9 +59,9 @@ class AdministratorsResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListAdministrators::route('/'),
-            'create' => Pages\CreateAdministrators::route('/create'),
-            'edit' => Pages\EditAdministrators::route('/{record}/edit'),
+            'index' => Pages\ListUsers::route('/'),
+            'create' => Pages\CreateUsers::route('/create'),
+            'edit' => Pages\EditUsers::route('/{record}/edit'),
         ];
     }
 }
