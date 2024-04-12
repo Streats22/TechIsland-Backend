@@ -11,7 +11,9 @@
         "laravel/framework": "^11.0",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
-        "shanerbaner82/panel-roles": "^0.0.3"
+        "shanerbaner82/panel-roles": "^0.0.3",
+        "shipu/web-installer": "^1.0",
+        "swisnl/filament-backgrounds": "^1.1"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

@@ -21,9 +21,11 @@ return [
     ],
 
     'guard_names' => [
-        'student' => 'student',
         'web' => 'web',
         'api' => 'api',
+        'dean' => 'dean',
+        'teacher' => 'teacher',
+        'student' => 'student',
     ],
 
     'toggleable_guard_names' => [
@@ -39,7 +41,7 @@ return [
 
     'model_filter_key' => 'return \'%\'.$value;', // Eg: 'return \'%\'.$key.'\%\';'
 
-    'user_name_column' => 'name',
+    'user_name_column' => 'first_name'. '' . 'name',
 
     /*
      * Icons to use for navigation
@@ -63,6 +65,9 @@ return [
         'guard_names' => [
             'web',
             'api',
+            'administrator',
+            'dean',
+            'teacher',
             'student',
         ],
 
@@ -135,8 +140,7 @@ return [
          */
         'custom_permissions' => [
             'Teacher' => \App\Models\Teachers::class,
-            'Dean' => \App\Models\Deans::class
-//            'Teachers' => Spatie\Permission\Models\Role::class,
+            'Dean' => \App\Models\Deans::class,
         ],
 
         'user_model' => \App\Models\User::class,

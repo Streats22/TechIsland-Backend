@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
 
 class Deans extends Model
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasRoles;
     protected $fillable = [
         'first_name',
         'last_name',
@@ -27,6 +28,9 @@ class Deans extends Model
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    public function role(){
+        $this->assignRole('Dean');
+    }
     public function administrator()
     {
         $this->belongsTo(User::class, 'administrator_id', 'id');

@@ -40,6 +40,14 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'dean' => [
+            'driver' => 'session',
+            'provider' => 'deans',
+        ],
+        'teacher' => [
+            'driver' => 'session',
+            'provider' => 'teachers',
+        ],
         'student' => [
             'driver' => 'session',
             'provider' => 'students',
@@ -71,6 +79,14 @@ return [
         'students' => [
             'driver' => 'eloquent',
             'model' => App\Models\students::class,
+        ],
+        'deans' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Deans::class,
+        ],
+        'teachers' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Teachers::class,
         ],
 
 
@@ -108,6 +124,20 @@ return [
             'expire' => 60,
             'throttle' => 60,
         ],
+        'deans' => [
+            'provider' => 'deans',
+            'table' => 'password_reset_tokens',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        'teachers' => [
+            'provider' => 'teachers',
+            'table' => 'password_reset_tokens',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+
+
     ],
 
     /*
