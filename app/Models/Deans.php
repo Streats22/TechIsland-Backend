@@ -2,13 +2,15 @@
 
 namespace App\Models;
 
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 
-class Deans extends Model
+class Deans extends Authenticatable implements FilamentUser
 {
     use HasFactory, Notifiable, HasRoles;
     protected $fillable = [
@@ -34,5 +36,10 @@ class Deans extends Model
     public function administrator()
     {
         $this->belongsTo(User::class, 'administrator_id', 'id');
+    }
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return  $this->hasVerifiedEmail();
     }
 }
