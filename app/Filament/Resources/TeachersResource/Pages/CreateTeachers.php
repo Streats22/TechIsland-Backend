@@ -3,11 +3,13 @@
 namespace App\Filament\Resources\TeachersResource\Pages;
 
 use App\Filament\Resources\TeachersResource;
+use App\Mail\PasswordResetTeacher;
 use App\Models\Teachers;
 use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
 
@@ -26,10 +28,12 @@ class CreateTeachers extends CreateRecord
         $this->record = static::getModel()::create($data);
 
         $user = Teachers::where('id', $this->record->id)->first();
+        Mail::to($user->email)->send(new PasswordResetTeacher($password, $user));
         $user->assignRole('teacher');
+
         // Optionally, send an email to the dean with instructions on how to reset their password
         // You might use Laravel's built-in notification system for this
-
+      ;
         return $this->record;
     }
 }
