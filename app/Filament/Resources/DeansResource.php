@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\DeansResource\Pages;
 use App\Filament\Resources\DeansResource\RelationManagers;
 use App\Models\Deans;
+use App\Models\Schools;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -27,7 +28,10 @@ class DeansResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('first_name'),
                 Forms\Components\TextInput::make('last_name'),
-                Forms\Components\TextInput::make('school'),
+                Forms\Components\Select::make('school')
+                    ->preload()
+                    ->options(Schools::pluck('school_name', 'school_name'))
+                    ->searchable(),
                 Forms\Components\TextInput::make('email'),
                 Forms\Components\TextInput::make('administrator_id')
                     ->default(Auth::id())
@@ -40,7 +44,9 @@ class DeansResource extends Resource
     {
         return $table
             ->columns([
-//
+                Tables\Columns\TextColumn::make('last_name'),
+                Tables\Columns\TextColumn::make('email'),
+                Tables\Columns\TextColumn::make('school'),
 
             ])
             ->filters([

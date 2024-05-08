@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\TeachersResource\Pages;
 use App\Filament\Resources\TeachersResource\RelationManagers;
+use App\Models\Schools;
 use App\Models\Teachers;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -26,7 +27,10 @@ class TeachersResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('first_name'),
                 Forms\Components\TextInput::make('last_name'),
-                Forms\Components\TextInput::make('school'),
+                Forms\Components\Select::make('school')
+                    ->preload()
+                    ->options(Schools::pluck('school_name', 'school_name'))
+                    ->searchable(),
                 Forms\Components\TextInput::make('email'),
 
                 Forms\Components\TextInput::make('dean_id')
@@ -40,7 +44,9 @@ class TeachersResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('last_name'),
+                Tables\Columns\TextColumn::make('email'),
+                Tables\Columns\TextColumn::make('school'),
             ])
             ->filters([
                 //

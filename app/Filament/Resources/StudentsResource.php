@@ -4,14 +4,14 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\StudentsResource\Pages;
 use App\Filament\Resources\StudentsResource\RelationManagers;
+use App\Models\Schools;
 use App\Models\Students;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Auth;
 
 class StudentsResource extends Resource
 {
@@ -23,15 +23,27 @@ class StudentsResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\TextInput::make('first_name'),
+                Forms\Components\TextInput::make('last_name'),
+                Forms\Components\TextInput::make('email'),
+                Forms\Components\Select::make('school')
+                    ->preload()
+                    ->options(Schools::pluck('school_name', 'school_name'))
+                    ->searchable(),
+                Forms\Components\TextInput::make('teacher_id')
+                    ->default(Auth::id())
+                    ->hidden()
+                    ->visible(false),
             ]);
+
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                //
+//                Tables\Columns\TextColumn::make('student_number'),
+                Tables\Columns\TextColumn::make('school'),
             ])
             ->filters([
                 //
