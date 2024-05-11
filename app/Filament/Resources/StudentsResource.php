@@ -30,6 +30,18 @@ class StudentsResource extends Resource
                     ->preload()
                     ->options(Schools::pluck('school_name', 'school_name'))
                     ->searchable(),
+                Forms\Components\Select::make('result_1')
+                    ->preload()
+                    ->options(Schools::pluck('name', 'id'))
+                    ->searchable(),
+                Forms\Components\Select::make('result_2')
+                    ->preload()
+                    ->options(Schools::pluck('name', 'id'))
+                    ->searchable(),
+                Forms\Components\Select::make('result_3')
+                    ->preload()
+                    ->options(Schools::pluck('name', 'id'))
+                    ->searchable(),
                 Forms\Components\TextInput::make('teacher_id')
                     ->default(Auth::id())
                     ->hidden()

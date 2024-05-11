@@ -28,8 +28,9 @@ class Workshops extends model
 
     protected $casts = [
         'start_date' => 'date',
-        'start_time' => 'time',
+//        'start_time' => 'time',
+
         'end_date' => 'date',
-        'end_time' => 'time',
+//        'end_time' => 'time',
     ];
 }

@@ -28,9 +28,9 @@ class WorkshopsResource extends Resource
                 Forms\Components\TimePicker::make('start_time')->nullable()->label('Start Time'),
                 Forms\Components\DatePicker::make('end_date')->nullable()->label('End Date'),
                 Forms\Components\TimePicker::make('end_time')->nullable()->label('End Time'),
-                Forms\Components\TextInput::make('Type')->label('Type Workshop'),
-                Forms\Components\TextInput::make('Name')->label('Workshop benaming'),
-                Forms\Components\TextInput::make('Company or School')->label('School of bedrijfsnaam'),
+                Forms\Components\TextInput::make('type')->label('Type Workshop'),
+                Forms\Components\TextInput::make('name')->label('Workshop benaming'),
+                Forms\Components\TextInput::make('company_school')->label('School of bedrijfsnaam'),
             ]);
     }
 

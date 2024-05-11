@@ -28,6 +28,9 @@ class Students extends Authenticatable
         'email',
         'email_verified_at',
         'password',
+        'result_1',
+        'result_2',
+        'result_3',
     ];
 
     protected $hidden = [
@@ -41,5 +44,17 @@ class Students extends Authenticatable
     public function teacher()
     {
         $this->belongsTo(Teachers::class, 'teacher_id');
+    }
+    public function result_1()
+    {
+        $this->belongsTo(Workshops::class, 'result_1');
+    }
+    public function result_2()
+    {
+        $this->belongsTo(Workshops::class, 'result_2');
+    }
+    public function result_3()
+    {
+        $this->belongsTo(Workshops::class, 'result_3');
     }
 }
