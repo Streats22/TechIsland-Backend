@@ -26,6 +26,7 @@ class StudentsResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('name'),
                 Forms\Components\TextInput::make('email'),
+                Forms\Components\TextInput::make('student_number'),
                 Forms\Components\Select::make('school_id')
                     ->preload()
                     ->options(Schools::pluck( 'school_name', 'id'))
