@@ -6,6 +6,7 @@ use App\Filament\Resources\StudentsResource\Pages;
 use App\Filament\Resources\StudentsResource\RelationManagers;
 use App\Models\Schools;
 use App\Models\Students;
+use App\Models\Workshops;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -23,24 +24,23 @@ class StudentsResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('first_name'),
-                Forms\Components\TextInput::make('last_name'),
+                Forms\Components\TextInput::make('name'),
                 Forms\Components\TextInput::make('email'),
-                Forms\Components\Select::make('school')
+                Forms\Components\Select::make('school_id')
                     ->preload()
-                    ->options(Schools::pluck('school_name', 'school_name'))
+                    ->options(Schools::pluck( 'school_name', 'id'))
                     ->searchable(),
                 Forms\Components\Select::make('result_1')
                     ->preload()
-                    ->options(Schools::pluck('name', 'id'))
+                    ->options(Workshops::pluck('name', 'id'))
                     ->searchable(),
                 Forms\Components\Select::make('result_2')
                     ->preload()
-                    ->options(Schools::pluck('name', 'id'))
+                    ->options(Workshops::pluck('name', 'id'))
                     ->searchable(),
                 Forms\Components\Select::make('result_3')
                     ->preload()
-                    ->options(Schools::pluck('name', 'id'))
+                    ->options(Workshops::pluck('name', 'id'))
                     ->searchable(),
                 Forms\Components\TextInput::make('teacher_id')
                     ->default(Auth::id())

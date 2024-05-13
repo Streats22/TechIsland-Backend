@@ -31,6 +31,7 @@ class Students extends Authenticatable
         'result_1',
         'result_2',
         'result_3',
+        'school_id',
     ];
 
     protected $hidden = [
@@ -44,6 +45,10 @@ class Students extends Authenticatable
     public function teacher()
     {
         $this->belongsTo(Teachers::class, 'teacher_id');
+    }
+    public function school()
+    {
+        $this->belongsTo(Schools::class, 'school_id');
     }
     public function result_1()
     {

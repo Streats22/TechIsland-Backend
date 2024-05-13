@@ -28,9 +28,10 @@ class Workshops extends model
 
     protected $casts = [
         'start_date' => 'date',
-//        'start_time' => 'time',
-
         'end_date' => 'date',
-//        'end_time' => 'time',
     ];
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+        ];
 }
