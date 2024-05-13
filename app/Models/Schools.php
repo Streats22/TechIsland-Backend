@@ -15,6 +15,7 @@ use Spatie\Permission\Traits\HasRoles;
 class Schools extends model
 {
     use HasFactory;
+    public const TABLE = 'schools';
 
     protected $fillable = [
         'school_name',
