@@ -47,7 +47,7 @@ class Students extends Authenticatable
     }
     public function school()
     {
-        $this->belongsTo(Schools::class, 'school_id');
+      return $this->belongsTo(Schools::class, 'school_id');
     }
     public function result_1()
     {
