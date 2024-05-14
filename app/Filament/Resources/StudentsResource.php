@@ -53,10 +53,11 @@ class StudentsResource extends Resource
 
     public static function table(Table $table): Table
     {
+
         return $table
             ->columns([
-//                Tables\Columns\TextColumn::make('student_number'),
-                Tables\Columns\TextColumn::make('school'),
+                Tables\Columns\TextColumn::make('student_number'),
+                Tables\Columns\TextColumn::make('school.school_name'),
             ])
             ->filters([
                 //
