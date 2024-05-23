@@ -30,5 +30,9 @@ class Schools extends model
         'contact_person_email',
         'contact_person_phone',
     ];
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+    ];
 
 }

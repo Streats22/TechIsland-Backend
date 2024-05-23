@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-
+use App\Models\Deans;
 use App\Models\Schools;
 use App\Models\Students;
 use App\Models\Teachers;
@@ -14,7 +14,19 @@ class UserDataController extends Controller
 {
     public function index()
     {
-        $paginate = Request::get('limit') ? Request::get('limit') : 12;
+        $students  = Students::get();
+        $teachers =  Teachers::get();
+        $deans  = Deans::get();
+        $schools =  Schools::get();
+        $workshops = Workshops::get();
+        return [
+            'Student' => $students,
+            'Teachers' => $teachers,
+            'Deans' => $deans,
+            'Schools' => $schools,
+            'Workshops' => $workshops,
+        ];
+
     }
 
     public function show($id)
@@ -31,11 +43,8 @@ class UserDataController extends Controller
         else{
                 $lastname = $teacher->last_name;
             }
-        $workshops = Workshops::get();
         if ($student) {
-
             return [
-                'workshops' => $workshops,
                 'name' => $student->name,
                 'school' => $school->school_name,
                 'student_number' => $student->student_number,
@@ -45,15 +54,10 @@ class UserDataController extends Controller
                 'uitslag1' => $workshop_1->name,
                 'uitslag2' => $workshop_2->name,
                 'uitslag3' =>  $workshop_3->name,
-
+                'visit_date' => $student->visit_date
             ];
 
         }
-    }
-
-    public function workshops(){
-
-        return Workshops::get();
     }
 }
 

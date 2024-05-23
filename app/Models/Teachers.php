@@ -22,8 +22,12 @@ class Teachers extends Authenticatable implements FilamentUser
         'student_number',
         'email',
         'dean_id',
-        'email_verified_at',
+    ];
+    protected $hidden = [
+        'created_at',
+        'updated_at',
         'password',
+        'remember_token',
     ];
 
     public function dean()
