@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Imports\SchoolsImporter;
+use App\Filament\Resources\StudentsRescourceResource\RelationManagers\StudentRelationManager;
 use App\Filament\Resources\WorkshopsResource\Pages;
 use App\Filament\Resources\WorkshopsResource\RelationManagers;
 use App\Models\Workshops;
@@ -9,6 +11,7 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\ImportAction;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -37,8 +40,13 @@ class WorkshopsResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->headerActions([
+                ImportAction::make()
+                    ->importer(SchoolsImporter::class)
+            ])
             ->columns([
-                //
+             Tables\Columns\TextColumn::make('company_school')->label('School of bedrijf'),
+                  Tables\Columns\TextColumn::make('name')->label('naam'),
             ])
             ->filters([
                 //
@@ -56,7 +64,7 @@ class WorkshopsResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            StudentRelationManager::class
         ];
     }
 

@@ -31,6 +31,7 @@ class Students extends Authenticatable
         'result_2',
         'result_3',
         'school_id',
+        'visit_date',
     ];
 
     protected $hidden = [

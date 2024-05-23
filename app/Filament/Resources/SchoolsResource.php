@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Imports\SchoolsImporter;
 use App\Filament\Resources\SchoolsResource\Pages;
 use App\Filament\Resources\SchoolsResource\RelationManagers;
 use App\Models\Schools;
@@ -9,6 +10,7 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\ImportAction;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -39,6 +41,10 @@ class SchoolsResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->headerActions([
+                ImportAction::make()
+                    ->importer(SchoolsImporter::class)
+            ])
             ->columns([
                 Tables\Columns\TextColumn::make('school_name'),
                 Tables\Columns\TextColumn::make('contact_person_name'),

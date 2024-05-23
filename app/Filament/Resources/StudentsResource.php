@@ -43,6 +43,7 @@ class StudentsResource extends Resource
                     ->preload()
                     ->options(Workshops::pluck('name', 'id'))
                     ->searchable(),
+                Forms\Components\DatePicker::make('visit_date')->nullable(),
                 Forms\Components\TextInput::make('teacher_id')
                     ->default(Auth::id())
                     ->hidden()
