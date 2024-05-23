@@ -30,6 +30,10 @@ class Teachers extends Authenticatable implements FilamentUser
         'remember_token',
     ];
 
+    public function isTeacher()
+    {
+        return $this->hasRole('teacher');
+    }
     public function dean()
     {
         return $this->belongsTo(Deans::class, 'dean_id');
@@ -38,6 +42,10 @@ class Teachers extends Authenticatable implements FilamentUser
     public function canAccessPanel(Panel $panel): bool
     {
         return $this->email;
+    }
+    public function students()
+    {
+        return $this->belongsTo(Students::class);
     }
 
     public function sendPasswordResetNotification($token)

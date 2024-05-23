@@ -3,7 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Imports\SchoolsImporter;
-use App\Filament\Resources\StudentsRescourceResource\RelationManagers\StudentRelationManager;
+use App\Filament\Resources\TeachersResource\RelationManagers\StudentRelationManager;
 use App\Filament\Resources\WorkshopsResource\Pages;
 use App\Filament\Resources\WorkshopsResource\RelationManagers;
 use App\Models\Workshops;
@@ -13,8 +13,6 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\ImportAction;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 
 class WorkshopsResource extends Resource
