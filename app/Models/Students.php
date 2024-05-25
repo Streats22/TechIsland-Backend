@@ -40,6 +40,13 @@ class Students extends Authenticatable
         'password',
         'remember_token',
     ];
+    protected static function booted()
+    {
+        static::created(function ($student) {
+            // Assuming the role "Teacher" already exists in your database
+            $student->assignRole('student');
+        });
+    }
 
     protected $casts = [
         'email_verified_at' => 'datetime',

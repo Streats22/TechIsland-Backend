@@ -4,7 +4,7 @@ namespace App\Providers\Filament;
 
 use Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsPlugin;
 use App\Http\Controllers\Auth\ForgotPasswordController;
-use Filament\Http\Middleware\Authenticate;
+use App\Http\Middleware\NewAuth;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Pages;
@@ -31,16 +31,16 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->passwordReset()
             ->colors([
                 'primary' => Color::Slate,
-                'Secondary' => Color::Sky
+                'secondary' => Color::Sky,
             ])
             ->plugins([
-                FilamentBackgroundsPlugin::make() ->imageProvider(
-                    MyImages::make()
-                        ->directory('images/backgrounds')
+                FilamentBackgroundsPlugin::make()->imageProvider(
+                    MyImages::make()->directory('images/backgrounds')
                 ),
-                FilamentSpatieRolesPermissionsPlugin::make()
+                FilamentSpatieRolesPermissionsPlugin::make(),
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
@@ -50,7 +50,6 @@ class AdminPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,
-
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -62,14 +61,13 @@ class AdminPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
+                NewAuth::class, // Use the new middleware
             ])
-
             ->authMiddleware([
-                Authenticate::class,
+                NewAuth::class, // Use the new middleware
             ])
-            ->passwordReset(
-              [  ForgotPasswordController::class, 'showLinkRequestForm']
-            );
-
+            ->passwordReset([
+                ForgotPasswordController::class, 'showLinkRequestForm'
+            ]);
     }
 }

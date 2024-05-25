@@ -32,6 +32,13 @@ class User extends Authenticatable implements FilamentUser
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    protected static function booted()
+    {
+        static::created(function ($admin) {
+            // Assuming the role "Teacher" already exists in your database
+            $admin->assignRole('Administrator');
+        });
+    }
     public function isTeacher()
     {
         return $this->hasRole('teacher');

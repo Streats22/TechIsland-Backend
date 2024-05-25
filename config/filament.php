@@ -82,6 +82,10 @@ return [
     | Livewire's standard 200ms delay.
     |
     */
+    // In your Filament resource or directly in the config/filament.php
+
+
+
 
     'livewire_loading_delay' => 'default',
 
