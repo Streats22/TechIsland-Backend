@@ -1,12 +1,24 @@
 <?php
+
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/admin/login');
 });
 
+Route::get('/admin', function () {
+    return Auth::check() ? redirect('/') : redirect('/admin/login');
+});
+
+Route::get('/teacher', function () {
+    return Auth::check() ? redirect('/') : redirect('/teacher/login');
+});
+Route::get('/dean', function () {
+    return Auth::check() ? redirect('/') : redirect('/dean/login');
+});
 
 // Password reset and other admin-specific routes
 Route::prefix('admin')->group(function () {

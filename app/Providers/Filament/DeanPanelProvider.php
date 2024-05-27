@@ -8,7 +8,6 @@ use App\Filament\Resources\TeacherResource\Pages\PersonalProfile;
 use App\Filament\Resources\TeachersResource;
 use Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsPlugin;
 use App\Filament\Resources\DeansResource;
-
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
