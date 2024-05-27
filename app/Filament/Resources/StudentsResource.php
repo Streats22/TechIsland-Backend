@@ -96,8 +96,6 @@ class StudentsResource extends Resource
             return static::$model::query();
         }
 
-        // Optionally, handle cases where there is no authenticated dean or admin
-        // This might return no results or handle access differently
         return static::$model::where('id', 0);
     }
 

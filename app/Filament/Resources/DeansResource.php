@@ -68,7 +68,19 @@ class DeansResource extends Resource
             //
         ];
     }
+    public static function getEloquentQuery(): Builder
+    {
+        // Retrieving the teacher directly using the auth guard.
+        $dean = Auth::guard('teacher')->user();
+        $admin = Auth::guard('web')->user();
+        if ($dean){
+            return static::$model::where('id', $dean->id);
+        } else if($admin){
+            return static::$model::query();
+        }
 
+        return static::$model::where('id', 0);
+    }
     public static function getPages(): array
     {
         return [

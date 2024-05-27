@@ -1,8 +1,14 @@
 <?php
 
 namespace App\Providers\Filament;
-
+use App\Filament\Resources\StudentsResource;
+use App\Filament\Resources\StudentsResource\Pages\ListStudents;
+use App\Filament\Resources\TeacherResource\Pages\PersonalProfile;
+//use App\Filament\Resources\TeachersResource\Pages\PersonalProfile;
+use App\Filament\Resources\TeachersResource;
 use Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsPlugin;
+use App\Filament\Resources\DeansResource;
+
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -28,7 +34,6 @@ class DeanPanelProvider extends PanelProvider
     public function panel(Panel $panel): Panel
     {
         return $panel
-
             ->id('dean')
             ->path('dean')
             ->authGuard('dean')// Define a unique path for the teacher panel
@@ -38,7 +43,11 @@ class DeanPanelProvider extends PanelProvider
                 'secondary' => Color::Sky,
             ])
             ->pages([
-                Pages\Dashboard::class,  // Assuming you have a Dashboard page for teachers
+                Pages\Dashboard::class,
+            ])
+            ->resources([
+                DeansResource::class,
+                TeachersResource::class
             ])
             ->widgets([
                 Widgets\AccountWidget::class,  // Example widget, you can define or remove widgets as needed
@@ -50,6 +59,7 @@ class DeanPanelProvider extends PanelProvider
                             ->directory('images/backgrounds')
                     ),
             ])
+            ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
