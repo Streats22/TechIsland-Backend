@@ -18,23 +18,30 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
+use Illuminate\Support\Facades\Route;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Swis\Filament\Backgrounds\FilamentBackgroundsPlugin;
 use Swis\Filament\Backgrounds\ImageProviders\MyImages;
 
-class AdminPanelProvider extends PanelProvider
+class DeanPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
         return $panel
-            ->default()
-            ->id('admin')
-            ->path('admin')
 
+            ->id('dean')
+            ->path('dean')
+            ->authGuard('dean')// Define a unique path for the teacher panel
             ->login()
             ->colors([
                 'primary' => Color::Slate,
-                'Secondary' => Color::Sky
+                'secondary' => Color::Sky,
+            ])
+            ->pages([
+                Pages\Dashboard::class,  // Assuming you have a Dashboard page for teachers
+            ])
+            ->widgets([
+                Widgets\AccountWidget::class,  // Example widget, you can define or remove widgets as needed
             ])
             ->plugins([
                 FilamentBackgroundsPlugin::make()
@@ -42,17 +49,6 @@ class AdminPanelProvider extends PanelProvider
                         MyImages::make()
                             ->directory('images/backgrounds')
                     ),
-                FilamentSpatieRolesPermissionsPlugin::make()
-            ])
-            ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
-            ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
-            ->pages([
-                Pages\Dashboard::class,
-            ])
-            ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
-            ->widgets([
-                Widgets\AccountWidget::class,
-
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -64,12 +60,16 @@ class AdminPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
-
             ])
 
             ->passwordReset(
                 [ForgotPasswordController::class, 'showLinkRequestForm']
             );
+    }
 
+    protected function getRoutes(): void
+    {
+        Route::get('/password/request', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('dean.password.request');
+        Route::post('/password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('dean.password.email');
     }
 }

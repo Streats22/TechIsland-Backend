@@ -57,13 +57,6 @@ class AssignRoles extends Command
 
     private function getRoleNameByUserType($userType)
     {
-        $teacher = new Teachers();
-        $teacher->first_name = 'John';
-        $teacher->last_name = 'Doe';
-        $teacher->email = 'john.doe@example.com';
-        $teacher->school = 'y';
-        $teacher->password = Hash::make('secret');
-        $teacher->save();
 
         // Maps user types to role names explicitly
         $mapping = [

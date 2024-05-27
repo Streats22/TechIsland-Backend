@@ -6,12 +6,14 @@ use App\Filament\Resources\StudentsResource\Pages;
 use App\Filament\Resources\StudentsResource\RelationManagers;
 use App\Models\Schools;
 use App\Models\Students;
+use App\Models\Teachers;
 use App\Models\Workshops;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 
 class StudentsResource extends Resource
@@ -79,6 +81,26 @@ class StudentsResource extends Resource
             //
         ];
     }
+    public static function getEloquentQuery(): Builder
+    {
+        // Retrieving the teacher directly using the auth guard.
+        $dean = Auth::guard('teacher')->user();
+        $teacher = Auth::guard('teacher')->user(); // Adjust the guard as necessary
+        $admin = Auth::guard('web')->user();
+        if ($teacher) {
+            // Return the query filtered by teacher_id if a teacher is authenticated
+            return static::$model::where('teacher_id', $teacher->id);
+        }else if($dean){
+            return static::$model::where('id', $dean->id);
+        } else if($admin){
+            return static::$model::query();
+        }
+
+        // Optionally, handle cases where there is no authenticated dean or admin
+        // This might return no results or handle access differently
+        return static::$model::where('id', 0);
+    }
+
 
     public static function getPages(): array
     {
@@ -88,4 +110,5 @@ class StudentsResource extends Resource
             'edit' => Pages\EditStudents::route('/{record}/edit'),
         ];
     }
+
 }

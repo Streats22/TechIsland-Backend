@@ -14,7 +14,9 @@ use Illuminate\Support\Facades\Password;
 class Deans extends Authenticatable implements FilamentUser
 {
     use HasFactory, Notifiable, HasRoles, CanResetPassword;
+    protected $table = 'deans';
 
+    protected $primaryKey = 'id';
     protected $fillable = [
         'first_name',
         'last_name',
@@ -46,7 +48,16 @@ class Deans extends Authenticatable implements FilamentUser
     {
         return $this->belongsTo(User::class, 'administrator_id', 'id');
     }
+    public function getNameAttribute(): string
+    {
+        return $this->first_name . ' ' . $this->last_name;
+    }
 
+    // If Filament or any other system needs a specific method for username
+    public function getUserName(): string
+    {
+        return $this->getNameAttribute(); // or simply use $this->email or any unique identifier
+    }
     public function canAccessPanel(Panel $panel): bool
     {
         return $this->email;

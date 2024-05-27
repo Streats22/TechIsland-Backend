@@ -13,7 +13,9 @@ use Spatie\Permission\Traits\HasRoles;
 class Teachers extends Authenticatable implements FilamentUser
 {
     use HasFactory, Notifiable, HasRoles, CanResetPassword;
+    protected $table = 'teachers';
 
+    protected $primaryKey = 'id';
     protected $fillable = [
         'first_name',
         'last_name',
@@ -48,14 +50,23 @@ class Teachers extends Authenticatable implements FilamentUser
         });
     }
 
-    public function canAccessPanel(Panel $panel): bool
+    public function getNameAttribute(): string
     {
-        return $this->hasRole('teacher') && $this->email_verified_at !== null;
+        return $this->first_name . ' ' . $this->last_name;
     }
 
+    // If Filament or any other system needs a specific method for username
+    public function getUserName(): string
+    {
+        return $this->getNameAttribute(); // or simply use $this->email or any unique identifier
+    }
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return $this->email;
+    }
     public function students()
     {
-        return $this->hasMany(Students::class);
+        return $this->hasMany(Students::class, 'teacher_id');
     }
 
     public function sendPasswordResetNotification($token)

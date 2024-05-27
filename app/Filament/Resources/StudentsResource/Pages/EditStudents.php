@@ -16,4 +16,5 @@ class EditStudents extends EditRecord
             Actions\DeleteAction::make(),
         ];
     }
+
 }

@@ -13,7 +13,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Http\Request;
 class TeachersResource extends Resource
 {
     protected static ?string $model = Teachers::class;
@@ -68,17 +68,35 @@ class TeachersResource extends Resource
             StudentRelationManager::class
         ];
     }
+
     public static function getEloquentQuery(): Builder
     {
-        if (auth()->user()->isTeacher()) {
-            return parent::getEloquentQuery()->where('teacher_id', auth()->id());
+        // Retrieving the dean directly using the 'dean' guard.
+        $dean = Auth::guard('dean')->user();
+        // Retrieving the admin using the 'web' guard.
+        $admin = Auth::guard('web')->user();
+        $teacher = Auth::guard('teacher')->user();
+
+        if ($dean) {
+            // Return the query filtered by dean_id if a dean is authenticated
+            return static::$model::where('dean_id', $dean->id);
+        }elseif($teacher){
+            return static::$model::where('id', $teacher->id);
+        } elseif ($admin) {
+            // Return all records if an admin is authenticated
+            return static::$model::query();
         }
-        return parent::getEloquentQuery();
+
+        // Optionally, handle cases where there is no authenticated dean or admin
+        // This might return no results or handle access differently
+        return static::$model::where('id', 0); // Effectively returns no results
     }
+
 
     public static function getPages(): array
     {
         return [
+
             'index' => Pages\ListTeachers::route('/'),
             'create' => Pages\CreateTeachers::route('/create'),
             'edit' => Pages\EditTeachers::route('/{record}/edit'),

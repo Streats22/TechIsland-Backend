@@ -1,45 +1,39 @@
 <x-filament::page>
-    <x-filament-panels::page>
-        <x-slot name="header">
-            My Profile
-        </x-slot>
+    <x-slot name="header">
+        My Profile - {{ optional($teacher)->first_name }} {{ optional($teacher)->last_name }}
+    </x-slot>
 
-        <x-filament::grid>
-            <x-filament::card>
-                <div class="text-xl font-bold mb-2">Personal Information</div>
-                <p><strong>Name:</strong> {{ $this->teacher->first_name }}</p>
-                <p><strong>Email:</strong> {{ $this->teacher->email }}</p>
-                <!-- Add other personal details here -->
-            </x-filament::card>
+    <x-filament::grid>
+        <x-filament::card>
+            <div class="text-xl font-bold mb-2">Personal Information</div>
+            <p><strong>Name:</strong> {{ optional($teacher)->first_name }} {{ optional($teacher)->last_name }}</p>
+            <p><strong>Email:</strong> {{ optional($teacher)->email }}</p>
+        </x-filament::card>
 
-            <x-filament::card>
-                <div class="text-xl font-bold mb-2">My Students</div>
+        <x-filament::card>
+            <div class="text-xl font-bold mb-2">My Students</div>
+            @if($students->isNotEmpty())
                 <div class="overflow-x-auto">
-                    <x-filament::table>
-                        <x-slot name="header">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead>
+                        <tr>
+                            <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Student Number</th>
+                            <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                        </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                        @foreach($students as $student)
                             <tr>
-                                <th>Student Number</th>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <!-- Add other necessary headers here -->
-                            </tr>
-                        </x-slot>
-                        @foreach($this->students as $student)
-                            <tr>
-                                <td>{{ $student->student_number }}</td>
-                                <td>{{ $student->first_name }}</td>
-                                <td>{{ $student->last_name }}</td>
-                                <!-- Add other data fields here -->
+                                <td class="px-6 py-4 whitespace-nowrap">{{ $student->student_number }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">{{ $student->name }}</td>
                             </tr>
                         @endforeach
-                    </x-filament::table>
+                        </tbody>
+                    </table>
                 </div>
-                @if($this->students->isEmpty())
-                    <div class="p-4 text-center text-sm text-gray-500">
-                        No students assigned yet.
-                    </div>
-                @endif
-            </x-filament::card>
-        </x-filament::grid>
-    </x-filament-panels::page>
+            @else
+                <div class="p-4 text-center text-sm text-gray-500">No students assigned yet.</div>
+            @endif
+        </x-filament::card>
+    </x-filament::grid>
 </x-filament::page>

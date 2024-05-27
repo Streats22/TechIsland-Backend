@@ -2,16 +2,20 @@
 
 namespace App\Providers;
 
+use App\Models\Teachers;
+use App\Policies\TeacherPolicy;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.
+     *
      */
+
     public function register(): void
     {
-        //
+
     }
 
     /**

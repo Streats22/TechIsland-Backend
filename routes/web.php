@@ -7,7 +7,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Password reset routes for Filament
+
+// Password reset and other admin-specific routes
 Route::prefix('admin')->group(function () {
     Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('filament.password.reset');
     Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('filament.password.update');
@@ -16,7 +17,21 @@ Route::prefix('admin')->group(function () {
 });
 
 
-// Ensure these routes are accessible after login
-Route::group(['prefix' => 'filament', 'middleware' => ['auth.multiple:web,teacher,dean']], function () {
-    Route::get('/personal-profile', [App\Filament\Resources\TeachersResource\Pages\MyProfile::class, 'render'])->name('filament.pages.my-profile');
+Route::prefix('teacher')->middleware(['auth:teacher'])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('teacher.dashboard');  // Assuming you have a dashboard view for teachers
+    })->name('teacher.dashboard');
+
+    Route::get('/personal-profile', function () {
+        logger('Personal profile route hit.');
+        return app(\App\Filament\Resources\TeachersResource\Pages\PersonalProfile::class)->render();
+    })->name('filament.teacher.resources.teachers.profile');
+
 });
+// Routes specific to deans
+Route::prefix('dean')->middleware(['auth:dean'])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dean.dashboard');  // Assuming you have a dashboard view for deans
+    })->name('dean.dashboard');
+});
+

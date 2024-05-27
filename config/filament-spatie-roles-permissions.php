@@ -21,7 +21,7 @@ return [
     ],
 
     'guard_names' => [
-        'web' => 'web',
+        'user' => 'user',
         'api' => 'api',
         'dean' => 'dean',
         'teacher' => 'teacher',

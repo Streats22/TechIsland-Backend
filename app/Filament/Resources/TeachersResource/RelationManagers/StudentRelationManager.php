@@ -12,11 +12,6 @@ class StudentRelationManager extends RelationManager
 {
     protected static string $relationship = 'students';  // Make sure this matches the relationship name in Teachers model
 
-    public static function canViewForRecord($ownerRecord, string $pageClass): bool
-    {
-        // Example: Check if the logged-in user is the teacher of these students or an admin
-        return auth()->user()->isTeacher() && auth()->user()->id === $ownerRecord->id;
-    }
 
     public function form(Form|Forms\Form $form): Forms\Form
     {
@@ -34,15 +29,15 @@ class StudentRelationManager extends RelationManager
             Tables\Columns\TextColumn::make('student_number')->label('Student Number'),
         ])
             ->headerActions([
-        Tables\Actions\CreateAction::make(),
-    ])
-                ->actions([
-        Tables\Actions\EditAction::make(),
-        Tables\Actions\DeleteAction::make(),
-    ])
-    ->bulkActions([
-        Tables\Actions\DeleteBulkAction::make(),
-    ]);
+                Tables\Actions\CreateAction::make(),
+            ])
+            ->actions([
+                Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
+            ])
+            ->bulkActions([
+                Tables\Actions\DeleteBulkAction::make(),
+            ]);
     }
 }
 
