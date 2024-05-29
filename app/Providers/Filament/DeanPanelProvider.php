@@ -9,7 +9,9 @@ use App\Filament\Resources\TeachersResource;
 use Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsPlugin;
 use App\Filament\Resources\DeansResource;
 use App\Http\Controllers\Auth\ForgotPasswordController;
-use App\Http\Middleware\Authenticate;
+
+use App\Http\Middleware\DeanAuthMiddleware;
+use App\Http\Middleware\TeacherAuthMiddleware;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Pages;
@@ -42,7 +44,7 @@ class DeanPanelProvider extends PanelProvider
                 'secondary' => Color::Sky,
             ])
             ->pages([
-                Pages\Dashboard::class,
+                Pages\Dashboard::class
             ])
             ->resources([
                 DeansResource::class,
@@ -70,7 +72,7 @@ class DeanPanelProvider extends PanelProvider
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
             ])
-
+            ->authMiddleware([  DeanAuthMiddleware::class,])
             ->passwordReset(
                 [ForgotPasswordController::class, 'showLinkRequestForm']
             );

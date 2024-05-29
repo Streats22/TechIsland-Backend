@@ -4,10 +4,11 @@ namespace App\Providers\Filament;
 
 use App\Filament\Resources\StudentsResource;
 use App\Filament\Resources\StudentsResource\Pages\ListStudents;
-use App\Filament\Resources\TeacherResource\Pages\PersonalProfile;
+//use App\Filament\Resources\TeacherResource\Pages\PersonalProfile;
 //use App\Filament\Resources\TeachersResource\Pages\PersonalProfile;
 use App\Filament\Resources\TeachersResource;
 use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Middleware\TeacherAuthMiddleware;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Pages;
@@ -35,7 +36,7 @@ class TeacherPanelProvider extends PanelProvider
         return $panel
             ->id('teacher')
             ->path('teacher')
-            ->authGuard('teacher')  // Ensure this guard is configured correctly
+            ->authGuard('teacher')
             ->login()
             ->colors([
                 'primary' => Color::Slate,
@@ -66,6 +67,7 @@ class TeacherPanelProvider extends PanelProvider
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
             ])
+            ->authMiddleware([  TeacherAuthMiddleware::class,])
             ->passwordReset(
                 [ForgotPasswordController::class, 'showLinkRequestForm']
             );

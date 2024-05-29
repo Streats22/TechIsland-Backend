@@ -10,18 +10,17 @@ Route::get('/', function () {
 });
 
 Route::get('/admin', function () {
-    return Auth::check() ? redirect('/') : redirect('/admin/login');
+    return  redirect('/admin/login');
 });
 
 Route::get('/teacher', function () {
-    return Auth::check() ? redirect('/') : redirect('/teacher/login');
-});
-Route::get('/dean', function () {
-    return Auth::check() ? redirect('/') : redirect('/dean/login');
+    return redirect('/teacher/login');
 });
 
+
+
 // Password reset and other admin-specific routes
-Route::prefix('admin')->group(function () {
+Route::prefix('admin')->middleware(['auth:web'])->group(function () {
     Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('filament.password.reset');
     Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('filament.password.update');
     Route::get('password/request', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('filament.password.request');
@@ -46,4 +45,3 @@ Route::prefix('dean')->middleware(['auth:dean'])->group(function () {
         return view('dean.dashboard');  // Assuming you have a dashboard view for deans
     })->name('dean.dashboard');
 });
-

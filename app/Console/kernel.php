@@ -12,7 +12,12 @@ class kernel extends ConsoleKernel
         $schedule->command('codenames:clear')->daily();
         $schedule->command('assign:roles {userType}')->daily();
     }
-
+    protected $routeMiddleware = [
+        // Existing middleware...
+        'admin.auth' => \App\Http\Middleware\AdminAuthMiddleware::class,
+        'teacher.auth' => \App\Http\Middleware\TeacherAuthMiddleware::class,
+        'dean.auth' => \App\Http\Middleware\DeanAuthMiddleware::class,
+    ];
 
     protected function commands()
     {
