@@ -1,12 +1,15 @@
-# Laravel Backend voor het project TechIsland - Eind Examen Software Developer MBO4
+# Laravel Backend voor het project TechIsland - Eind Examen Software Developer MBO NIV 4
 
 **De live website van de backend:** 
+
 https://techyourtalentamsterdam.nl/
 
 **De api staat op**: 
+
 https://api.techyourtalentamsterdam.nl/api/overview
 
 **In samenwerking met de front end:**
+
 https://github.com/Kipmevrouw/Proeve-Front-end
 
 Op TechIsland kunnen leerlingen van VO (en PO) de wereld van techniek verkennen. Dit door mee te doen aan verschillende
@@ -58,9 +61,29 @@ Dit zal algemeen alle leeraren zijn die bij de school zelf horen.
 Leeraren hebben alleen toestemmingen om hun eigen gegevens te wijzigen en de studenten die horen bij de docent zelf. 
 
 ### Veiligheid:
-Er wordt gebruik gemaakt van zelf gemaakte guards in samenwerking met Spatie/Roles and permissions.
+Er wordt gebruik gemaakt van zelf gemaakte guards in samenwerking met `Spatie/Roles and permissions`.
+
+#### Hoe log je in?
+
+Admin:  /admin/login 'gebruikt auth **web**'
+
+auth gaat via `AdminAuthMiddleware`
+
+Leeraar: /teacher/login 'gebruikt auth **teacher**'
+
+auth gaat via `TeacherAuthMiddleware`
 
 
+Decaan: /dean/login 'gebruikt auth **dean**' 
+auth gaat via  ` DeanAuthMiddleware`
+
+
+
+### Plugins en packages:
+
+- filamentphp.com
+- Spaties Roles and permissions - Filament plugin
+- Backgrounds plugin by SWIS - Filament plugin
 
 ## Examen informatie
 
@@ -68,8 +91,11 @@ Er wordt gebruik gemaakt van zelf gemaakte guards in samenwerking met Spatie/Rol
 TechIsLand (Evelien van Polanen Petel)
 
 **Beoordelaars:**
+
 Erik Willems (Intern)
+
 Robin Timman (Extern)
+
 
 **Coach:**
 Bart Ros
