@@ -5,10 +5,13 @@ namespace App\Filament\Resources\UsersResource\Pages;
 use App\Filament\Resources\UsersResource;
 use App\Models\Deans;
 use App\Models\User;
+use App\Notifications\PasswordResetNotification;
 use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 
 class CreateUsers extends CreateRecord
@@ -25,9 +28,17 @@ class CreateUsers extends CreateRecord
         // Assuming `Deans` is your model name, and it's properly set up with fillable attributes
         $this->record = static::getModel()::create($data);
         $user = User::where('id', $this->record->id)->first();
+        $this->sendPasswordReset($this->record);
         $user->assignRole('Administrator');
         // Optionally, send an email to the dean with instructions on how to reset their password
         // You might use Laravel's built-in notification system for this
         return $this->record;
     }
+    protected function sendPasswordReset(Deans $dean)
+    {
+        // Create a password reset token and send it via the notification system
+        $token = Password::broker()->createToken($dean);
+        $dean->sendPasswordResetNotification($token);
+    }
+
 }

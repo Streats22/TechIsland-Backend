@@ -26,7 +26,7 @@ class CreateDeans extends CreateRecord
 
         // Automatically send a password reset link
         $this->sendPasswordReset($this->record);
-
+        $this->assignRole('dean');
         return $this->record;
     }
 
