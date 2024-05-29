@@ -29,7 +29,7 @@ class UsersResource extends Resource
     {
         return $form
             ->schema([
-                Select::make('roles')->unique()->relationship('roles', 'name')->required(),
+
                 Forms\Components\TextInput::make('name'),
                 Forms\Components\TextInput::make('email'),
             ]);
