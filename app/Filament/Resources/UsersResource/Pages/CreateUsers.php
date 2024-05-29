@@ -34,11 +34,11 @@ class CreateUsers extends CreateRecord
         // You might use Laravel's built-in notification system for this
         return $this->record;
     }
-    protected function sendPasswordReset(Deans $dean)
+    protected function sendPasswordReset(User $user)
     {
         // Create a password reset token and send it via the notification system
-        $token = Password::broker()->createToken($dean);
-        $dean->sendPasswordResetNotification($token);
+        $token = Password::broker()->createToken($user);
+        $user->sendPasswordResetNotification($token);
     }
 
 }

@@ -38,11 +38,11 @@ class CreateTeachers extends CreateRecord
       ;
         return $this->record;
     }
-    protected function sendPasswordReset(Deans $dean)
+    protected function sendPasswordReset(Teachers $teacher)
     {
         // Create a password reset token and send it via the notification system
-        $token = Password::broker()->createToken($dean);
-        $dean->sendPasswordResetNotification($token);
+        $token = Password::broker()->createToken($teacher);
+        $teacher->sendPasswordResetNotification($token);
     }
 
 }
