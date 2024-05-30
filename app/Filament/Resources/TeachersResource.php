@@ -72,23 +72,20 @@ class TeachersResource extends Resource
     public static function getEloquentQuery(): Builder
     {
         // Retrieving the dean directly using the 'dean' guard.
-        $dean = Auth::guard('dean')->user();
+
         // Retrieving the admin using the 'web' guard.
         $admin = Auth::guard('web')->user();
         $teacher = Auth::guard('teacher')->user();
-
-        if ($dean) {
-            // Return the query filtered by dean_id if a dean is authenticated
+        $dean = Auth::guard('dean')->user();
+        if ($dean){
             return static::$model::where('dean_id', $dean->id);
-        }elseif($teacher){
+        } elseif($teacher){
             return static::$model::where('id', $teacher->id);
         } elseif ($admin) {
             // Return all records if an admin is authenticated
             return static::$model::query();
         }
 
-        // Optionally, handle cases where there is no authenticated dean or admin
-        // This might return no results or handle access differently
         return static::$model::where('id', 0); // Effectively returns no results
     }
 
