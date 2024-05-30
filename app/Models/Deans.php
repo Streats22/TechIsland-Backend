@@ -41,7 +41,7 @@ class Deans extends Authenticatable implements FilamentUser
     {
         static::created(function ($dean) {
             // Assuming the role "Teacher" already exists in your database
-            $dean->assignRole('dean');
+            $dean->assignRole('Dean');
         });
     }
     public function administrator()

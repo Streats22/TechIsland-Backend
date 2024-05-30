@@ -31,7 +31,7 @@ class CreateTeachers extends CreateRecord
 
         $user = Teachers::where('id', $this->record->id)->first();
         $this->sendPasswordReset($this->record);
-        $user->assignRole('teacher');
+        $user->assignRole('Teacher');
 
         // Optionally, send an email to the dean with instructions on how to reset their password
         // You might use Laravel's built-in notification system for this

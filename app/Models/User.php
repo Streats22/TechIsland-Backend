@@ -35,13 +35,14 @@ class User extends Authenticatable implements FilamentUser
     protected static function booted()
     {
         static::created(function ($admin) {
+
             // Assuming the role "Teacher" already exists in your database
             $admin->assignRole('Administrator');
         });
     }
     public function isTeacher()
     {
-        return $this->hasRole('teacher');
+        return $this->hasRole('Teacher');
     }
 
     public function canAccessPanel(Panel $panel): bool
