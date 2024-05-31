@@ -3,6 +3,7 @@
 namespace App\Providers\Filament;
 
 use Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsPlugin;
+use App\Filament\Widgets\SynceAndRemoveButtons;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 
 use App\Http\Middleware\AdminAuthMiddleware;
@@ -56,6 +57,7 @@ class AdminPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,
+                SynceAndRemoveButtons::class,
 
             ])
             ->middleware([

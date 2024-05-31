@@ -1,4 +1,6 @@
 <?php
+
+use App\Http\Controllers\CodenamesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
@@ -6,7 +8,8 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 Route::get('/', function () {
     return redirect('admin/login');
 });
-
+Route::post('/assign-codenames', [CodenamesController::class, 'assignCodenames'])->name('assign-codenames');
+Route::post('/clear-codenames', [CodenamesController::class, 'clearCodenames'])->name('clear-codenames');
 
 // Password reset and other admin-specific routes
 Route::prefix('admin')->group(function () {
