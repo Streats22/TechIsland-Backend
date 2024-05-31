@@ -59,12 +59,7 @@ class WorkshopsResource extends Resource
             ]);
     }
 
-    public static function getRelations(): array
-    {
-        return [
-            StudentRelationManager::class
-        ];
-    }
+
 
     public static function getPages(): array
     {
