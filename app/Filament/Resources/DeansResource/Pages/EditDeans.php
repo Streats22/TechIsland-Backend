@@ -15,12 +15,13 @@ class EditDeans extends EditRecord
 
     protected function getHeaderActions(): array
     {
+        $user = Auth::guard('web')->user();
         $dean = Auth::guard('dean')->user();
-        if (static::$model::where('id', $dean->id)  ) {
-            return  [ ];
-        }else{
+        if ( $user)   {
+            return  [  Actions\DeleteAction::make(),];
+        }elseif(static::$model::where('id', $dean->id)){
             return [
-                Actions\DeleteAction::make(),
+
             ];
         }
 

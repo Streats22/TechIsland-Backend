@@ -16,13 +16,19 @@ class EditTeachers extends EditRecord
 
     protected function getHeaderActions(): array
     {
-        $user = Auth::guard('teacher')->user();
-        if (static::$model::where('id', $user->id)) {
+
+        $user = Auth::guard('web')->user();
+        $dean = Auth::guard('dean')->user();
+        $teacher = Auth::guard('teacher')->user();
+
+
+        if ($user) {
+            return [Actions\DeleteAction::make(),];
+        }elseif($dean) {
+            return [Actions\DeleteAction::make(),];
+        }
+        elseif (static::$model::where('id', $teacher->id)) {
             return [];
-        } else {
-            return [
-                Actions\DeleteAction::make(),
-            ];
         }
     }
 }
