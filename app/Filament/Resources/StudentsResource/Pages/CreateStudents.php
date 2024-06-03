@@ -24,7 +24,7 @@ class CreateStudents extends CreateRecord
         // Assuming `Deans` is your model name, and it's properly set up with fillable attributes
         $this->record = static::getModel()::create($data);
         $user = Students::where('id', $this->record->id)->first();
-        $user->assignRole('student');
+//        $user->assignRole('student');
 
         // Optionally, send an email to the dean with instructions on how to reset their password
         // You might use Laravel's built-in notification system for this
