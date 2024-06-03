@@ -32,7 +32,13 @@ class DeansResource extends Resource
                     ->preload()
                     ->options(Schools::pluck('school_name', 'school_name'))
                     ->searchable(),
-                Forms\Components\TextInput::make('email'),
+                Forms\Components\TextInput::make('email')
+                    ->unique(ignorable: fn ($record) => $record)
+                    ->email()
+                    ->required()
+                    ->label('Email Address')
+                    ->placeholder('Enter your email')
+                    ->helperText('Please enter a valid email address.'),
                 Forms\Components\TextInput::make('administrator_id')
                     ->default(Auth::id())
                     ->hidden()

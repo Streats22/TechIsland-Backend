@@ -20,9 +20,13 @@ class CreateStudents extends CreateRecord
         $password = Str::random(10);
         $data['password'] = Hash::make($password);
 
+        $teacher = Auth::guard('teacher')->user();
         // Now, store the dean with the generated password
         // Assuming `Deans` is your model name, and it's properly set up with fillable attributes
         $this->record = static::getModel()::create($data);
+        $this->record->update([
+            'teacher_id' => $teacher->id,
+        ]);
         $user = Students::where('id', $this->record->id)->first();
 //        $user->assignRole('student');
 

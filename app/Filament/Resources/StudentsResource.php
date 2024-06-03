@@ -27,7 +27,13 @@ class StudentsResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name'),
-                Forms\Components\TextInput::make('email'),
+                Forms\Components\TextInput::make('email')
+                    ->unique(ignorable: fn ($record) => $record)
+                    ->email()
+                    ->required()
+                    ->label('Email Address')
+                    ->placeholder('Enter your email')
+                    ->helperText('Please enter a valid email address.'),
                 Forms\Components\TextInput::make('student_number'),
                 Forms\Components\Select::make('school_id')
                     ->preload()

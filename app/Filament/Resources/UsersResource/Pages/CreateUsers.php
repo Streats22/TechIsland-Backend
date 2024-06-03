@@ -28,8 +28,8 @@ class CreateUsers extends CreateRecord
         // Assuming `Deans` is your model name, and it's properly set up with fillable attributes
         $this->record = static::getModel()::create($data);
         $user = User::where('id', $this->record->id)->first();
+
         $this->sendPasswordReset($this->record);
-        $user->assignRole('Administrator');
         // Optionally, send an email to the dean with instructions on how to reset their password
         // You might use Laravel's built-in notification system for this
         return $this->record;

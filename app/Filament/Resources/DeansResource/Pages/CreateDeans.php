@@ -18,15 +18,16 @@ class CreateDeans extends CreateRecord
     {
         // Generate a secure random password
         $password = Str::random(10);
-        $data['administrator_id'] = Auth::id();
+        $admin = Auth::guard('web')->user();
         $data['password'] = Hash::make($password);
 
         // Store the dean with the generated password
         $this->record = static::getModel()::create($data);
-
+        $this->record->update([
+            'administrator_id' => $admin->id,
+        ]);
         // Automatically send a password reset link
         $this->sendPasswordReset($this->record);
-//        $this->assignRole('dean');
         return $this->record;
     }
 

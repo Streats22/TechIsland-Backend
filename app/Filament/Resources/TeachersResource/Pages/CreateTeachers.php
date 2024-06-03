@@ -22,13 +22,16 @@ class CreateTeachers extends CreateRecord
     {
         // Generate a secure random password
         $password = Str::random(10);
-        $data['dean_id'] = Auth::id();
+        $dean = Auth::guard('dean')->user();
         $data['password'] = Hash::make($password);
 
         // Now, store the dean with the generated password
         // Assuming `Deans` is your model name, and it's properly set up with fillable attributes
         $this->record = static::getModel()::create($data);
 
+        $this->record->update([
+            'dean_id' => $dean->id,
+        ]);
         $user = Teachers::where('id', $this->record->id)->first();
         $this->sendPasswordReset($this->record);
 //        $user->assignRole('Teacher');
